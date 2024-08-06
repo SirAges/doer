@@ -7,10 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSignInMutation } from "@/redux/auth/authApiSlice";
 import {
     setLoading,
-    selectCurrentAdmin,
-    setAdmin,
     selectCurrentLoading
 } from "@/redux/loading/loadingSlice";
+import {
+    selectCurrentAdmin,
+    setAdmin,
+} from "@/redux/auth/authSlice";
 import { signInForm } from "@/lib/form";
 import { authSchema } from "@/lib/schema";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -69,6 +71,8 @@ const SignIn = () => {
 
                     <FormInput
                         from="sign-in"
+                        files={[]}
+                        setFiles={()=>[]}
                         loading={loading}
                         list={signInForm}
                         schema={authSchema}

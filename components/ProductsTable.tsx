@@ -26,7 +26,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
     const [modal, setModal] = useState(false);
     const [edit, setEdit] = useState(false);
     const [hero, setHero] = useState(false);
-    const [item, setItem] = useState(false);
+    const [item, setItem] = useState({});
     const [opt, setOpt] = useState(false);
     const [idx, setIdx] = useState(null);
     const [updateProduct] = useUpdateProductMutation();
@@ -50,7 +50,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
             setProducts(filtered?.length ? filtered : []);
         }
         return () => [];
-    }, [days, data]);
+    }, [days]);
 
     const buttons = [
         {
@@ -138,7 +138,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
         "shipping",
         "sku"
     ];
-    const brandOptions = ["name", "images"];
+
     return (
         <ScrollView>
             <View className="relative flex-1">
@@ -225,7 +225,10 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                                 sku
                             }) => (
                                 <>
-                                    <View  key={$id}className="flex-row items-start py-2 px-2 space-x-2 bproduct-b bproduct-dark-3">
+                                    <View
+                                        key={$id}
+                                        className="flex-row items-start py-2 px-2 space-x-2 bproduct-b bproduct-dark-3"
+                                    >
                                         <View
                                             style={{
                                                 backgroundColor: "#1eec2735"
@@ -295,7 +298,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                                         <View className="flex-row items-center space-x-2 w-24">
                                             {colors.split(",").map(c => (
                                                 <Text
-                                                key={c}
+                                                    key={c}
                                                     style={{
                                                         backgroundColor: c
                                                     }}
@@ -306,7 +309,9 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                                         <View className="flex-row items-center space-x-2 w-24">
                                             {sizes.split(",").map(s => (
                                                 <Text
-                                 key={s}               className="  font-semibold uppercase">
+                                                    key={s}
+                                                    className="  font-semibold uppercase"
+                                                >
                                                     {s}
                                                 </Text>
                                             ))}
@@ -329,6 +334,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                         modal={edit}
                         item={item}
                         setModal={setEdit}
+                        modalName="edit product"
                         action={handleEdit}
                     />
                     {item?.title && (

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
-import { setAdmin, selectCurrentAdmin } from "@/redux/loading/loadingSlice";
+import { setAdmin, selectCurrentAdmin } from "@/redux/auth/authSlice";
 import Checkbox from "expo-checkbox";
 import PhoneInput from "react-native-phone-input";
 import DateTimePickerModal from "react-native-modal-datetime-picker";

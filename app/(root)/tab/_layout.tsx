@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     setLoading,
     selectCurrentLoading,
-    selectCurrentAdmin,
-    setAdmin
+    
 } from "@/redux/loading/loadingSlice";
-import { selectCurrentSession } from "@/redux/auth/authSlice";
+import { selectCurrentSession ,selectCurrentAdmin,
+    setAdmin} from "@/redux/auth/authSlice";
 export default function TabLayout() {
     const admin = useSelector(selectCurrentAdmin);
     const session = useSelector(selectCurrentSession);

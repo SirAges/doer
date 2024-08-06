@@ -36,7 +36,7 @@ const OrdersTable = ({ days, data, isFetching, refetch }) => {
             setOrders(filtered);
         }
         return () => [];
-    }, [days, data]);
+    }, [days]);
     const update = async (field, value) => {
         console.log(field, value);
         const vals = {
@@ -46,18 +46,17 @@ const OrdersTable = ({ days, data, isFetching, refetch }) => {
             }
         };
         const data = await updateOrder(vals);
-        console.log("data", data);
         setModal(false);
     };
     return (
         <View className="flex-1">
             <Text
                 onPress={refetch}
-                className="w-full py-2 font-semibold capitalize text-center"
+                className=" py-2 font-semibold capitalize "
             >
                 {isFetching ? "fetching" : "reload table"}
             </Text>
-            <ScrollView horizontal>
+            <ScrollView className="flex-1" horizontal>
                 <View className="space-y-2 bg-white ">
                     <View className="flex-row items-center px-2 space-x-2 border-b-2 border-dark-3 ">
                         <Text className="w-24">order date</Text>
@@ -66,117 +65,121 @@ const OrdersTable = ({ days, data, isFetching, refetch }) => {
                         <Text className="w-44">order products</Text>
                         <Text className="w-24">order status</Text>
                     </View>
-                    {orders.map(
-                        ({
-                            $createdAt,
-                            $id,
-                            totalAmount,
-                            products,
-                            status
-                        }) => (
-                            <View className="flex-row items-start py-2 px-2 space-x-2 border-b border-dark-3">
-                                <View
-                                    style={{ backgroundColor: "#1eec2735" }}
-                                    className="px-2 py-2 items-center justify-center h-fit"
-                                >
-                                    <Ionicons
-                                        onPress={() => {
-                                            setIdx($id);
-                                            setModal(true);
-                                        }}
-                                        name="menu"
-                                        size={16}
-                                    />
-                                </View>
-                                <Text className="w-24">
-                                    {formatDateTime($createdAt).dateOnly}
-                                </Text>
-                                <Text className="w-44">{$id}</Text>
-                                <Text className="font-semibold w-24">
-                                    {formatAmount(totalAmount)}
-                                </Text>
-                                <View className=" space-x-2 w-44 px-2 max-h-44">
-                                    <ScrollView>
-                                        {products.map(p => {
-                                            const arr = p.split("=");
-                                            const productId = arr[0];
-                                            const qty = arr[1];
-                                            const price = arr[2];
-                                            const title = arr[3];
-                                            const image = arr[4];
-                                            const size = arr[5];
-                                            const color = arr[6];
-                                            return (
-                                                <View
-                                                    className="space-y-2"
-                                                    key={productId}
-                                                >
-                                                    <Text className="tracking-wider font-light">
-                                                        {productId}
-                                                    </Text>
-                                                    <View className="flex-row items-center justify-between space-x-2">
-                                                        <Text className="font-semibold">
-                                                            {title}
+                    <ScrollView nestedScrollEnabled>
+                        {orders.map(
+                            ({
+                                $createdAt,
+                                $id,
+                                totalAmount,
+                                products,
+                                status
+                            }) => (
+                                <View className="flex-row items-start py-2 px-2 space-x-2 border-b border-dark-3">
+                                    <View
+                                        style={{ backgroundColor: "#1eec2735" }}
+                                        className="px-2 py-2 items-center justify-center h-fit"
+                                    >
+                                        <Ionicons
+                                            onPress={() => {
+                                                setIdx($id);
+                                                setModal(true);
+                                            }}
+                                            name="menu"
+                                            size={16}
+                                        />
+                                    </View>
+                                    <Text className="w-24">
+                                        {formatDateTime($createdAt).dateOnly}
+                                    </Text>
+                                    <Text className="w-44">{$id}</Text>
+                                    <Text className="font-semibold w-24">
+                                        {formatAmount(totalAmount)}
+                                    </Text>
+                                    <View className=" space-x-2 w-44 px-2 max-h-44">
+                                        <ScrollView nestedScrollEnabled>
+                                            {products.map(p => {
+                                                const arr = p.split("=");
+                                                const productId = arr[0];
+                                                const qty = arr[1];
+                                                const price = arr[2];
+                                                const title = arr[3];
+                                                const image = arr[4];
+                                                const size = arr[5];
+                                                const color = arr[6];
+                                                return (
+                                                    <View
+                                                        className="space-y-2"
+                                                        key={productId}
+                                                    >
+                                                        <Text className="tracking-wider font-light">
+                                                            {productId}
                                                         </Text>
+                                                        <View className="flex-row items-center justify-between space-x-2">
+                                                            <Text className="font-semibold">
+                                                                {title}
+                                                            </Text>
+                                                            <Text>
+                                                                {formatAmount(
+                                                                    price
+                                                                )}
+                                                            </Text>
+                                                        </View>
                                                         <Text>
-                                                            {formatAmount(
-                                                                price
-                                                            )}
+                                                            quantity: {qty}
                                                         </Text>
+                                                        <View className="flex-row space-x-2">
+                                                            <Text className="">
+                                                                size:
+                                                            </Text>
+                                                            <Text className="uppercase font-semibold">
+                                                                {size}
+                                                            </Text>
+                                                        </View>
+                                                        <View className="flex-row space-x-2">
+                                                            <Text className="">
+                                                                color:
+                                                            </Text>
+                                                            <Text
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        color
+                                                                }}
+                                                                className="rounded-full border-2 border-dark-3 font-semibold h-5 w-5"
+                                                            ></Text>
+                                                        </View>
+                                                        <View className="flex-row space-x-2">
+                                                            <Text className="">
+                                                                total:
+                                                            </Text>
+                                                            <Text className="font-semibold">
+                                                                {formatAmount(
+                                                                    qty * price
+                                                                )}
+                                                            </Text>
+                                                        </View>
+                                                        <View className="h-[1px] w-full bg-dark-3 my-2" />
                                                     </View>
-                                                    <Text>quantity: {qty}</Text>
-                                                    <View className="flex-row space-x-2">
-                                                        <Text className="">
-                                                            size:
-                                                        </Text>
-                                                        <Text className="uppercase font-semibold">
-                                                            {size}
-                                                        </Text>
-                                                    </View>
-                                                    <View className="flex-row space-x-2">
-                                                        <Text className="">
-                                                            color:
-                                                        </Text>
-                                                        <Text
-                                                            style={{
-                                                                backgroundColor:
-                                                                    color
-                                                            }}
-                                                            className="rounded-full border-2 border-dark-3 font-semibold h-5 w-5"
-                                                        ></Text>
-                                                    </View>
-                                                    <View className="flex-row space-x-2">
-                                                        <Text className="">
-                                                            total:
-                                                        </Text>
-                                                        <Text className="font-semibold">
-                                                            {formatAmount(
-                                                                qty * price
-                                                            )}
-                                                        </Text>
-                                                    </View>
-                                                    <View className="h-[1px] w-full bg-dark-3 my-2" />
-                                                </View>
-                                            );
-                                        })}
-                                    </ScrollView>
+                                                );
+                                            })}
+                                        </ScrollView>
+                                    </View>
+                                    <Text
+                                        className={`uppercase font-semibold w-24 h-5 text-center rounded-sm ${
+                                            status === "pending"
+                                                ? "bg-amber-400"
+                                                : status === "ongoing"
+                                                ? "bg-blue-400"
+                                                : status === "fulfilled"
+                                                ? "bg-green-400"
+                                                : null
+                                        }`}
+                                    >
+                                        {status}
+                                    </Text>
                                 </View>
-                                <Text
-                                    className={`uppercase font-semibold w-24 h-5 text-center rounded-sm ${
-                                        status === "pending"
-                                            ? "bg-amber-400"
-                                            : status === "ongoing"
-                                            ? "bg-blue-400"
-                                            : status === "fulfilled"
-                                            ? "bg-green-400"
-                                            : null
-                                    }`}
-                                >
-                                    {status}
-                                </Text>
-                            </View>
-                        )
-                    )}
+                            )
+                        )}
+                    </ScrollView>
                 </View>
                 <Modal
                     animationType="slide"

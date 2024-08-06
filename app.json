@@ -1,13 +1,12 @@
 {
   "expo": {
-    "name": "doer",
-    "slug": "doer",
+    "name": "jee",
+    "slug": "jee",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -20,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.phesplus"
     },
     "web": {
       "bundler": "metro",
@@ -39,6 +39,21 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f6be1e4f-1fb9-43f2-9435-975919ca16a8"
+      }
+    },
+    "owner": "phestplus",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f6be1e4f-1fb9-43f2-9435-975919ca16a8"
     }
   }
 }

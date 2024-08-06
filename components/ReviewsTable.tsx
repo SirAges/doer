@@ -2,7 +2,7 @@ import Reviews from "./Reviews";
 import { useState, useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { View, Text } from "react-native";
-import { useGetReviewsQuery } from "@/redux/review/reviewApiSlice";
+
 const ReviewsTable = ({ days, refetch, isFetching, data }) => {
     const [reviews, setReviews] = useState([]);
     const [opt, setOpt] = useState(false);
@@ -21,10 +21,10 @@ const ReviewsTable = ({ days, refetch, isFetching, data }) => {
                 return res;
             });
 
-            setReviews(filtered?.length ? filtered : []);
+            setReviews(filtered);
         }
         return () => [];
-    }, [days, data]);
+    }, [days]);
 
     return (
         <View>
@@ -43,6 +43,7 @@ const ReviewsTable = ({ days, refetch, isFetching, data }) => {
             </View>
             <View>
                 <Reviews reviews={reviews} />
+              
             </View>
         </View>
     );

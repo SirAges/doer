@@ -93,9 +93,6 @@ const Profile = () => {
                 <View className="w-full h-[1px] bg-dark-2" />
 
                 <View className="px-4 py-2 space-y-4 items-center justify-center flex-1">
-                    <Text className="font-semibold text-primary-2">
-                        Forgot password
-                    </Text>
                     <Text
                         onPress={() => setModal(true)}
                         className="font-semibold text-primary-2"

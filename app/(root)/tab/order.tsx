@@ -29,7 +29,7 @@ const Order = () => {
     const userId = session?.userId;
     const date = new Date();
     const [openDate, setOpenDate] = useState(false);
-    const { data: orders } = useGetOrdersQuery();
+    const { data: orders,isFetching } = useGetOrdersQuery();
 
     const [filter, setFilter] = useState(false);
     const [allOrders, setAllOrders] = useState([]);
@@ -94,6 +94,9 @@ const Order = () => {
 
     if (!allOrders?.length) {
         return <Loader text="your order is empty" />;
+    }
+    if (isFetching) {
+        return <Loader text="please wait... fetching orders" />;
     }
     if (orders === undefined) {
         return (

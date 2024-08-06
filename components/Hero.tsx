@@ -1,10 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { router } from "expo-router";
 import { View, Text, Image } from "react-native";
 
-const Hero = ({data}) => {
-    
-    let hero = {
+const Hero = ({ data }) => {
+    const [hero, setHero] = useState({
         productId: "",
         tag: "",
         images: [],
@@ -14,10 +13,15 @@ const Hero = ({data}) => {
         backColor: "",
         layout: "",
         discount: ""
-    };
-    if (data && data !== undefined) {
-        hero = data.documents[0];
-    }
+    });
+
+    useEffect(() => {
+        if (data && data !== undefined) {
+            setHero(data.documents[0]);
+        }
+        return () => [];
+    }, [data]);
+
     const {
         tag,
         images,
@@ -50,13 +54,13 @@ const Hero = ({data}) => {
                         style={{ color: frontColor }}
                         className="font-semibold "
                     >
-                        #{tag}
+                        {tag}
                     </Text>
                     <Text
                         style={{ color: frontColor }}
                         className="text-4xl uppercase font-black "
                     >
-                        {discount}% off
+                        {discount} off
                     </Text>
                     <Text
                         style={{ color: frontColor }}

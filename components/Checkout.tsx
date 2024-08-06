@@ -47,11 +47,11 @@ const Checkout = ({ amount, products, variant }) => {
             }
 
             const { error: paymentSheetError } = await initPaymentSheet({
-                merchantDisplayName: "Doer Fashion.",
-                paymentIntentClientSecret: data.clientSecret,
+                merchantDisplayName: "Doer Fashion",
+                paymentIntentClientSecret: data?.clientSecret,
                 defaultBillingDetails: {
-                    name: user?.name,
-                    email: user?.email
+                    name: user?.name
+                    //email: user?.email
                 }
             });
             if (paymentSheetError) {

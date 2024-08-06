@@ -85,6 +85,8 @@ const SignUp = () => {
 
                     <FormInput
                         from="sign-up"
+                         files={[]}
+                        setFiles={() => []}
                         loading={loading}
                         list={signUpForm}
                         schema={authSchema}

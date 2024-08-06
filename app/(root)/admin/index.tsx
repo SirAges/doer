@@ -1,3 +1,5 @@
+
+import Loader from "@/components/Loader";
 import UsersTable from "@/components/UsersTable";
 import ReviewsTable from "@/components/ReviewsTable";
 import ProductsTable from "@/components/ProductsTable";
@@ -6,15 +8,20 @@ import AdminCard from "@/components/AdminCard";
 import SelectDropdown from "react-native-select-dropdown";
 import Search from "@/components/Search";
 import { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetCurrentQuery } from "@/redux/auth/authApiSlice";
 import { useGetProductsQuery } from "@/redux/product/productApiSlice";
 import { useGetReviewsQuery } from "@/redux/review/reviewApiSlice";
 import { useGetOrdersQuery } from "@/redux/order/orderApiSlice";
+import { useGetUsersQuery } from "@/redux/user/userApiSlice";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { router } from "expo-router";
+import { useDispatch } from "react-redux";
+import { setAdmin } from "@/redux/auth/authSlice";
 const Index = () => {
     const { data: user } = useGetCurrentQuery();
+    const dispatch = useDispatch();
     const {
         data: products,
         refetch: pRefetch,
@@ -30,6 +37,12 @@ const Index = () => {
         refetch: rRefetch,
         isFetching: rFetching
     } = useGetReviewsQuery();
+    const {
+        data: users,
+        refetch: uRefetch,
+        isFetching: uFetching
+    } = useGetUsersQuery();
+
     const [search, setSearch] = useState("");
     const [selected, setSelected] = useState("order");
     const [days, setDays] = useState("3 days");
@@ -43,18 +56,94 @@ const Index = () => {
     ];
 
     const filterDays = () => {};
+    if (oFetching || rFetching || pFetching || uFetching) {
+        return <Loader text="please wait... initializing dashboard" />;
+    }
+    if (
+        (!orders ||
+            !orders ||
+            !users ||
+            !reviews ||
+            !products ||
+            user ||
+            user === undefined ||
+            reviews === undefined ||
+            orders === undefined ||
+            products === undefined ||
+            users === undefined) &&
+        (oFetching || rFetching || pFetching || uFetching)
+    ) {
+        return (
+            <Loader
+                refetch={null}
+                text="unable to fetch products check your internet connection"
+            />
+        );
+    }
+
+    const oTotal = orders?.total;
+    const rTotal = reviews?.total;
+    const pTotal = products?.total;
+    const uTotal = users?.total;
+    const oPrev =
+        oTotal > 1
+            ? orders?.documents[oTotal - 2]?.totalAmount
+            : products?.documents[0].totalAmount;
+    const rPrev =
+        rTotal > 1
+            ? reviews?.documents[rTotal - 2]?.rate
+            : reviews?.documents[0].rate;
+    const pPrev =
+        pTotal > 1
+            ? products?.documents[pTotal - 2]?.price
+            : products?.documents[0].price;
+    const oCurr =
+        oTotal > 1
+            ? orders?.documents[oTotal - 1]?.totalAmount
+            : products?.documents[0].totalAmount;
+    const rCurr =
+        rTotal > 1
+            ? reviews?.documents[rTotal - 1]?.rate
+            : reviews?.documents[0].rate;
+    const pCurr =
+        pTotal > 1
+            ? products?.documents[pTotal - 1]?.price
+            : products?.documents[0].price;
+    const logoutAdmin = () => {
+        Alert.alert(
+            "Hold on!",
+            "Are you sure you want to leave the admin dashboard?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                {
+                    text: "YES",
+                    onPress: () => {
+                        dispatch(setAdmin());
+                        router.replace("tab");
+                    }
+                }
+            ]
+        );
+    };
     return (
         <View className="bg-white flex-1">
             <SafeAreaView className="">
-                <View className="px-2">
-                    <Text className="font-semibold capitalize text-dark-2">
-                        Welcome
-                    </Text>
-                    <Text className="text-xl font-semibold capitalize">
-                        {user?.name}
-                    </Text>
+                <View className="px-4 flex-row items-center justify-between">
+                    <View>
+                        <Text className="font-semibold capitalize text-dark-2">
+                            Welcome
+                        </Text>
+                        <Text className="text-xl font-semibold capitalize">
+                            {user?.name}
+                        </Text>
+                    </View>
+                    <Ionicons onPress={logoutAdmin} name="power" size={24} />
                 </View>
-                <View className="px-2 py-2 bg-white shadow shadow-md shadow-black/40 rounded-md my-2 mx-2 w-48 ">
+                <View className="px-2 py-2 bg-white shadow shadow-md shadow-black/40 rounded-sm my-2 mx-2 w-48 ">
                     <View>
                         <SelectDropdown
                             dropdownStyle={{
@@ -96,15 +185,9 @@ const Index = () => {
                     <View className="w-1/2 h-24  bg-white p-1 ">
                         <AdminCard
                             color="#1eec2735"
-                            total={orders?.total + 140}
-                            current={
-                                orders?.documents[orders?.total - 1]
-                                    ?.totalAmount
-                            }
-                            previous={
-                                orders?.documents[orders?.total - 2]
-                                    ?.totalAmount || 1
-                            }
+                            total={oTotal}
+                            current={oCurr}
+                            previous={oPrev}
                             setSelected={setSelected}
                             selected={selected}
                             setSelected={setSelected}
@@ -116,13 +199,9 @@ const Index = () => {
                     <View className="w-1/2 h-24  bg-white p-1">
                         <AdminCard
                             color="#ecd61e35"
-                            total={products?.total + 112}
-                            current={
-                                products?.documents[products?.total - 1]?.price
-                            }
-                            previous={
-                                products?.documents[products?.total - 2]?.price
-                            }
+                            total={pTotal}
+                            current={pCurr}
+                            previous={pPrev}
                             setSelected={setSelected}
                             selected={selected}
                             name="product"
@@ -132,13 +211,9 @@ const Index = () => {
                     <View className="w-1/2 h-24  bg-white p-1">
                         <AdminCard
                             color="#1e34ec35"
-                            total={reviews?.total + 57}
-                            current={
-                                reviews?.documents[reviews?.total - 1]?.rate
-                            }
-                            previous={
-                                reviews?.documents[reviews?.total - 2]?.rate
-                            }
+                            total={rTotal}
+                            current={rCurr}
+                            previous={rPrev}
                             setSelected={setSelected}
                             selected={selected}
                             name="review"
@@ -148,11 +223,11 @@ const Index = () => {
                     <View className="w-1/2 h-24  bg-white p-1">
                         <AdminCard
                             color="#ec1e4035"
-                            total={234}
-                            current={24}
+                            total={uTotal}
+                            current={100}
                             setSelected={setSelected}
                             selected={selected}
-                            previous={33}
+                            previous={3}
                             name="user"
                             icon="people-group"
                         />
@@ -167,7 +242,6 @@ const Index = () => {
                         data={orders}
                         isFetching={oFetching}
                         refetch={oRefetch}
-                        days={days}
                     />
                 )}
                 {selected === "product" && (
@@ -182,19 +256,17 @@ const Index = () => {
                 {selected === "user" && (
                     <UsersTable
                         days={days}
-                        data={products}
-                        isFetching={pFetching}
-                        refetch={pFetching}
+                        data={users}
+                        isFetching={uFetching}
+                        refetch={uRefetch}
                     />
                 )}
-
                 {selected === "review" && (
                     <ReviewsTable
                         days={days}
                         data={reviews}
                         isFetching={rFetching}
                         refetch={rRefetch}
-                        days={days}
                     />
                 )}
             </View>

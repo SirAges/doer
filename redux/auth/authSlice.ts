@@ -3,7 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        session: null
+        session: null,
+        admin: false
     },
     reducers: {
         setSession: (state, action) => {
@@ -12,12 +13,16 @@ const authSlice = createSlice({
 
         logOut: (state, action) => {
             state.session = null;
+        },
+        setAdmin: (state, action) => {
+            state.admin = !state.admin;
         }
     }
 });
 
-export const { logOut, setSession } = authSlice.actions;
+export const { logOut, setSession, setAdmin } = authSlice.actions;
 
 export default authSlice.reducer;
 
 export const selectCurrentSession = state => state.auth.session;
+export const selectCurrentAdmin = state => state.auth.admin;

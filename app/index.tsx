@@ -5,6 +5,7 @@ import { Link } from "expo-router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentSession } from "@/redux/auth/authSlice";
+import { persistor } from "./store";
 const Index = () => {
     const session = useSelector(selectCurrentSession);
 
@@ -17,8 +18,11 @@ const Index = () => {
             />
 
             <View className="absolute w-full items-center justify-center">
-                <Text className="text-white font-bold capitalize text-3xl">
-                    Doer fashion
+                <Text
+                    onPress={async () => await persistor.purge()}
+                    className="text-white font-bold  text-3xl"
+                >
+                    JEE Fashion
                 </Text>
 
                 <Link

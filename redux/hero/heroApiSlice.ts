@@ -15,7 +15,7 @@ export const herosApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getHeros: builder.query({
             query: () => ({
-                url: `/databases/${DATABASE_ID}/collections/${HERO_COLLECTION_ID}/documents?order=["$createdAt","DESC"]`,
+                url: `/databases/${DATABASE_ID}/collections/${HERO_COLLECTION_ID}/documents`,
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
@@ -37,28 +37,10 @@ export const herosApiSlice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError;
                 }
             }),
-
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
-                        { type: "Hero", id: "LIST" },
-                        ...result.ids.map(id => ({ type: "Hero", id }))
-                    ];
-                } else return [{ type: "Hero", id: "LIST" }];
-            }
-        }),
-        getUserHero: builder.query({
-            query: userId => ({
-                url: `/databases/${DATABASE_ID}/collections/${HERO_COLLECTION_ID}/documents?filter=[{key:"userId",operator:"equals",value:"${userId}"}]&hero=["$createdAt","DESC"]`,
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError;
-                }
-            }),
-
-            providesTags: (result, error, arg) => {
-                if (result?.ids) {
-                    return [
-                        { type: "Hero", id: "LIST" },
+                        { type: "", id: "LIST" },
                         ...result.ids.map(id => ({ type: "Hero", id }))
                     ];
                 } else return [{ type: "Hero", id: "LIST" }];
@@ -74,39 +56,14 @@ export const herosApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: (result, error, arg) => {
                 console.log(result, arg, error);
-                return [{ type: "Review", id: arg.id }];
+                return [{ type: "Hero", id: arg.id }];
             }
-        }),
-        addNewHero: builder.mutation({
-            query: value => ({
-                url: `/databases/${DATABASE_ID}/collections/${HERO_COLLECTION_ID}/documents`,
-                method: "POST",
-                body: value
-            }),
-            invalidatesTags: (result, error, arg) => [
-                { type: "Hero", id: arg.id }
-            ]
-        }),
-        deleteHero: builder.mutation({
-            query: heroId => ({
-                url: `/databases/${DATABASE_ID}/collections/${HERO_COLLECTION_ID}/documents/66acb740002853f7f1a0`,
-                method: "DELETE"
-            }),
-            invalidatesTags: (result, error, arg) => [
-                { type: "Hero", id: arg.id }
-            ]
         })
     })
 });
 
-export const {
-    useGetHerosQuery,
-    useGetHeroQuery,
-    useGetUserHeroQuery,
-    useAddNewHeroMutation,
-    useUpdateHeroMutation,
-    useDeleteHeroMutation
-} = herosApiSlice;
+export const { useGetHerosQuery, useGetHeroQuery, useUpdateHeroMutation } =
+    herosApiSlice;
 
 // returns the query result object
 export const selectHerosResult = herosApiSlice.endpoints.getHeros.select();
