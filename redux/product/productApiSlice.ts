@@ -1,12 +1,9 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 
 import { apiSlice } from "@/app/api/apiSlice";
-const {
-    EXPO_PUBLIC_DATABASE_ID: DATABASE_ID,
-    EXPO_PUBLIC_PRODUCT_COLLECTION_ID: PRODUCT_COLLECTION_ID,
-    EXPO_PUBLIC_BUCKET_ID: BUCKET_ID,
-    EXPO_PUBLIC_API_KEY: API_KEY
-} = process.env;
+const DATABASE_ID = process.env.EXPO_PUBLIC_DATABASE_ID;
+const PRODUCT_COLLECTION_ID =process.env.EXPO_PUBLIC_PRODUCT_COLLECTION_ID
+
 const productsAdapter = createEntityAdapter({
     sortComparer: (a, b) => b.$createdAt - a.$createdAt
 });

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, type RefObject } from "react";
-import {  TextInput, View, StyleSheet } from "react-native";
+import { TextInput, View } from "react-native";
 
 interface OTPInputProps {
     codes: string[];
@@ -21,7 +21,7 @@ export default function OTPInput({ codes, setCodes, len }: OTPInputProps) {
     useEffect(() => {
         setCodes(Array(len).fill(""));
         return () => [];
-    }, []);
+    }, [len]);
 
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 

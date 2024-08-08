@@ -1,31 +1,22 @@
-import OtpModal from "@/components/OtpModal";
 import FormInput from "@/components/FormInput";
-import { useState } from "react";
-import { View, Text, TextInput, Image, Alert } from "react-native";
+import { View, Text, Image } from "react-native";
 import { authInitial } from "@/lib/initial";
 import { useDispatch, useSelector } from "react-redux";
 import { useSignInMutation } from "@/redux/auth/authApiSlice";
-import {
-    setLoading,
-    selectCurrentLoading
-} from "@/redux/loading/loadingSlice";
-import {
-    selectCurrentAdmin,
-    setAdmin,
-} from "@/redux/auth/authSlice";
+import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
+import { selectCurrentAdmin,  } from "@/redux/auth/authSlice";
 import { signInForm } from "@/lib/form";
 import { authSchema } from "@/lib/schema";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import Toast from "react-native-simple-toast";
-import { Link, router } from "expo-router";
+import {  router } from "expo-router";
 const SignIn = () => {
     const dispatch = useDispatch();
     const loading = useSelector(selectCurrentLoading);
     const admin = useSelector(selectCurrentAdmin);
 
-    const [codes, setCodes] = useState<string | undefined>(Array(len).fill(""));
-    const len = 6;
+  
     const [signIn] = useSignInMutation();
 
     const onSubmit = async value => {
@@ -35,6 +26,7 @@ const SignIn = () => {
             const data = await signIn(value);
 
             if (data?.error) {
+                console.log("data", data);
                 Toast.show("error signing in check credentials");
                 return;
             }
@@ -43,7 +35,7 @@ const SignIn = () => {
             } else {
                 router.replace("tab");
             }
-        } catch ({ status, message }) {
+        } catch ({  message }) {
             Toast.show(message);
         } finally {
             dispatch(setLoading());
@@ -72,7 +64,7 @@ const SignIn = () => {
                     <FormInput
                         from="sign-in"
                         files={[]}
-                        setFiles={()=>[]}
+                        setFiles={() => []}
                         loading={loading}
                         list={signInForm}
                         schema={authSchema}

@@ -36,7 +36,7 @@ const RecentView = ({ products }) => {
         };
 
         getBest();
-    }, [recents, products]);
+    }, [recents, products,dispatch]);
     return allProducts?.length ? (
         <View className="w-full px-2 py-1">
             <View className="flex-row items-center justify-between">

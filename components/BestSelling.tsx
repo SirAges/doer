@@ -1,7 +1,7 @@
 import ProdCard from "./ProdCard";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TouchableWithoutFeedback } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { getRating } from "@/lib/utils";
 import { useGetReviewsQuery } from "@/redux/review/reviewApiSlice";

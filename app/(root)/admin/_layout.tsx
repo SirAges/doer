@@ -1,28 +1,41 @@
-import { Slot, router } from "expo-router";
+import { Slot } from "expo-router";
 import * as Progress from "react-native-progress";
-import { View } from "react-native";
+import { router } from "expo-router";
+import { View, Text } from "react-native";
 import { useEffect } from "react";
 import Toast from "react-native-simple-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { useGetCurrentQuery } from "@/redux/auth/authApiSlice";
-import {
-    selectCurrentSession,
-    selectCurrentAdmin
-} from "@/redux/auth/authSlice";
+import { selectCurrentAdmin } from "@/redux/auth/authSlice";
 export default function AdminLayout() {
     const loading = useSelector(selectCurrentLoading);
     const admin = useSelector(selectCurrentAdmin);
-    const session = useSelector(selectCurrentSession);
+
     const { data: user } = useGetCurrentQuery();
     const userIsAdmin = user?.labels.includes("admin");
     useEffect(() => {
-        if (session && admin && userIsAdmin) {
+        if (admin && userIsAdmin) {
             Toast.show("welcome admin");
+        } else {
+            router.replace("tab");
         }
-        return () => false;
-    }, [session]);
 
+        return () => false;
+    }, [admin, userIsAdmin]);
+    if (!userIsAdmin) {
+        return (
+            <View className="h-full w-full justify-center items-center space-y-3">
+                <Text>You are not an admin</Text>
+                <Text
+                    onPress={() => router.replace("tab")}
+                    className="text-primary-2 font-semibold"
+                >
+                    go back
+                </Text>
+            </View>
+        );
+    }
     return (
         <>
             {loading && (

@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 const AboutItem = ({ about, setVariant, variant }) => {
     const { shortdesc, desc, colors, sizes, weight } = about;
     const colorArray = colors.split(",");

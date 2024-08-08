@@ -1,18 +1,14 @@
-
 import Loader from "@/components/Loader";
 
 import ProdCard from "@/components/ProdCard";
 import Search from "@/components/Search";
 
 import { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { useLocalSearchParams, useGlobalSearchParams, Link } from "expo-router";
-import {
-    useGetProductsQuery,
-    useGetSearchProductQuery
-} from "@/redux/product/productApiSlice";
+import { useLocalSearchParams } from "expo-router";
+import { useGetProductsQuery } from "@/redux/product/productApiSlice";
 const Searches = () => {
     const { searched } = useLocalSearchParams();
     const { data: products } = useGetProductsQuery();
@@ -34,7 +30,7 @@ const Searches = () => {
             getSearched();
         }
         return () => [];
-    }, [searched]);
+    }, [searched,products]);
     if (!allSearched?.length)
         return <Loader text={`No Search result for ${searched}`} />;
     return (

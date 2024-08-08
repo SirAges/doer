@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableWithoutFeedback } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
-import { getRating } from "@/lib/utils";
 const NewArrivals = ({ products }) => {
     const [allProducts, setAllProducts] = useState([]);
     useEffect(() => {

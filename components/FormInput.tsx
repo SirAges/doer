@@ -4,7 +4,6 @@ import {
     Text,
     TouchableOpacity,
     TextInput,
-    Button,
     ScrollView,
     Image,
     TouchableWithoutFeedback
@@ -19,7 +18,6 @@ import { formatDateTime } from "@/lib/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SelectDropdown from "react-native-select-dropdown";
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button";
-import * as zod from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as DocumentPicker from "expo-document-picker";
@@ -48,9 +46,9 @@ const FormInput = ({
 }) => {
     const signin = from === "sign-in";
     const signup = from === "sign-up";
-    const createProduct = from === "create-product";
+
     const showReset = true;
-    const date = new Date();
+
     const admin = useSelector(selectCurrentAdmin);
     const dispatch = useDispatch();
 
@@ -82,8 +80,6 @@ const FormInput = ({
     };
 
     const {
-        register,
-        setValue,
         handleSubmit,
         control,
         reset,
@@ -93,15 +89,11 @@ const FormInput = ({
         defaultValues: initial
     });
 
-    const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
-        return console.log(errors);
-    };
     const RenderInput = ({ items }) => {
         const {
             onChange,
             onBlur,
             value,
-            label,
             name,
             placeholder,
             type,
@@ -502,9 +494,7 @@ const FormInput = ({
                                 setFiles([]);
                             }}
                         >
-                            <Text className="text-primary-1">
-                                Reset
-                            </Text>
+                            <Text className="text-primary-1">Reset</Text>
                         </TouchableOpacity>
                     )}
                 </View>

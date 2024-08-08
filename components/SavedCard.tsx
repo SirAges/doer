@@ -1,28 +1,23 @@
-import { useState, useEffect } from "react";
 import { View, Text, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { products } from "@/lib/data";
+
 import { formatAmount, formatText } from "@/lib/utils";
 
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import {
-    selectCurrentWish,
-    addToWish,
+  
     removeFromWish,
     updateWish
 } from "@/redux/wish/wishSlice";
 
 import {
-    selectCurrentCart,
-    addToCart,
+
     removeFromCart,
     updateCart
 } from "@/redux/cart/cartSlice";
 import Ionicons from "@expo/vector-icons/Ionicons";
 const SavedCard = ({ item, saved }) => {
     const dispatch = useDispatch();
-    const wishes = useSelector(selectCurrentWish);
-    const carts = useSelector(selectCurrentCart);
+
     const wishScreen = saved === "wish";
     const cartScreen = saved === "cart";
     const { $id, title, desc, images, price, qty, variant } = item;

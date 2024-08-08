@@ -28,7 +28,7 @@ const orderSlice = createSlice({
         },
 
         removeFromOrder: (state, action) => {
-            const accessToken = action.payload;
+        
             const order = state.order;
             const filtered = order.filter(f => f.id !== action.payload);
             state.order = filtered;

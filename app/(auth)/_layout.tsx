@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { Stack } from "expo-router/stack";
-import { router } from "expo-router";
 import { selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { useSelector } from "react-redux";
 import { View } from "react-native";

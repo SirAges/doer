@@ -30,10 +30,10 @@ const EditModal = ({
 
     const [field, setField] = useState(initialFields[0]);
     const [password, setPassword] = useState("");
-    const {
-        EXPO_PUBLIC_CLOUDINARY_CLOUDENAME,
-        EXPO_PUBLIC_CLOUDINARY_API_KEY
-    } = process.env;
+    const EXPO_PUBLIC_CLOUDINARY_CLOUDENAME =
+        process.env.EXPO_PUBLIC_CLOUDINARY_CLOUDENAME;
+    const EXPO_PUBLIC_CLOUDINARY_API_KEY =
+        process.env.EXPO_PUBLIC_CLOUDINARY_API_KEY;
     useEffect(() => {
         if (field === "images") {
             setFiles(item[field]);
@@ -41,7 +41,7 @@ const EditModal = ({
         }
         setValue(item[field]);
         return () => "";
-    }, [field, modal]);
+    }, [field, modal, item]);
     const pickDocument = async () => {
         try {
             const { assets } = await DocumentPicker.getDocumentAsync({
@@ -348,7 +348,7 @@ const EditModal = ({
                                             value={password}
                                             secureTextEntry
                                             onChangeText={setPassword}
-                                            secureTextEntry
+                                            
                                             placeholder={`${
                                                 field === "oldPassword"
                                                     ? "new"

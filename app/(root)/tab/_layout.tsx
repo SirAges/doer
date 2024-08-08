@@ -3,32 +3,25 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { View } from "react-native";
 import { Tabs, router } from "expo-router";
 import * as Progress from "react-native-progress";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
+import { selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import {
-    setLoading,
-    selectCurrentLoading,
-    
-} from "@/redux/loading/loadingSlice";
-import { selectCurrentSession ,selectCurrentAdmin,
-    setAdmin} from "@/redux/auth/authSlice";
+    selectCurrentSession,
+    selectCurrentAdmin
+} from "@/redux/auth/authSlice";
 export default function TabLayout() {
     const admin = useSelector(selectCurrentAdmin);
     const session = useSelector(selectCurrentSession);
-    const dispatch = useDispatch();
+
     const loading = useSelector(selectCurrentLoading);
 
     useEffect(() => {
-        if (session) {
-            if (admin) {
-                router.replace("admin");
-            } else {
-                router.replace("tab");
-            }
-        } else {
-            router.push("/sign-in");
+        if (!session) {
+            router.replace("(auth)/sign-in");
+            return;
         }
-    }, [session]);
+    }, [ session]);
     return (
         <>
             {loading && (

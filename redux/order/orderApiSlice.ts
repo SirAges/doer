@@ -1,10 +1,9 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 
 import { apiSlice } from "@/app/api/apiSlice";
-const {
-    EXPO_PUBLIC_DATABASE_ID: DATABASE_ID,
-    EXPO_PUBLIC_ORDER_COLLECTION_ID: ORDER_COLLECTION_ID
-} = process.env;
+const DATABASE_ID = process.env.EXPO_PUBLIC_DATABASE_ID;
+const ORDER_COLLECTION_ID =process.env. EXPO_PUBLIC_ORDER_COLLECTION_ID
+
 const ordersAdapter = createEntityAdapter({
     sortComparer: (a, b) => b.$createdAt - a.$createdAt
 });
@@ -70,15 +69,14 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
                 url: `/databases/${DATABASE_ID}/collections/${ORDER_COLLECTION_ID}/documents/${orderId}`,
                 method: "PATCH",
                 body: value
-                // 
+                //
             })
         }),
         addNewOrder: builder.mutation({
             query: value => ({
                 url: `/databases/${DATABASE_ID}/collections/${ORDER_COLLECTION_ID}/documents`,
                 method: "POST",
-                body: value,
-                
+                body: value
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: "Order", id: arg.id }
@@ -87,8 +85,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
         deleteOrder: builder.mutation({
             query: orderId => ({
                 url: `/databases/${DATABASE_ID}/collections/${ORDER_COLLECTION_ID}/documents/${orderId}`,
-                method: "DELETE",
-                
+                method: "DELETE"
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: "Order", id: arg.id }

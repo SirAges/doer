@@ -1,13 +1,13 @@
-import {} from "react";
+
 import {
     View,
     Text,
     Modal,
     TouchableWithoutFeedback,
-    Alert
+
 } from "react-native";
 import Checkbox from "expo-checkbox";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const FilterModal = ({ open, setOpen, filter, setFilter }) => {
     const sizes = ["xs", "sm", "md", "lg", "xl", "xxl"];
     const prices = ["$", "$$", "$$$", "$$$$", "$$$$$", "$$$$$$"];

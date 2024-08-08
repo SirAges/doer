@@ -32,7 +32,7 @@ const wishSlice = createSlice({
         },
 
         removeFromWish: (state, action) => {
-            const accessToken = action.payload;
+          
             const wish = state.wish;
             const filtered = wish.filter(f => f.$id !== action.payload);
             state.wish = filtered;

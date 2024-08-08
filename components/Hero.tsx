@@ -40,7 +40,7 @@ const Hero = ({ data }) => {
                 <Image
                     className="w-full h-full"
                     style={{ resizeMode: "cover" }}
-                    source={{ uri: hero.images[0] }}
+                    source={{ uri: images[0] }}
                 />
             </View>
             <View

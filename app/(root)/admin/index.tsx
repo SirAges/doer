@@ -1,4 +1,3 @@
-
 import Loader from "@/components/Loader";
 import UsersTable from "@/components/UsersTable";
 import ReviewsTable from "@/components/ReviewsTable";
@@ -6,9 +5,9 @@ import ProductsTable from "@/components/ProductsTable";
 import OrdersTable from "@/components/OrdersTable";
 import AdminCard from "@/components/AdminCard";
 import SelectDropdown from "react-native-select-dropdown";
-import Search from "@/components/Search";
+
 import { useState } from "react";
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetCurrentQuery } from "@/redux/auth/authApiSlice";
 import { useGetProductsQuery } from "@/redux/product/productApiSlice";
@@ -16,7 +15,7 @@ import { useGetReviewsQuery } from "@/redux/review/reviewApiSlice";
 import { useGetOrdersQuery } from "@/redux/order/orderApiSlice";
 import { useGetUsersQuery } from "@/redux/user/userApiSlice";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { router } from "expo-router";
+
 import { useDispatch } from "react-redux";
 import { setAdmin } from "@/redux/auth/authSlice";
 const Index = () => {
@@ -43,7 +42,6 @@ const Index = () => {
         isFetching: uFetching
     } = useGetUsersQuery();
 
-    const [search, setSearch] = useState("");
     const [selected, setSelected] = useState("order");
     const [days, setDays] = useState("3 days");
     const options = [
@@ -55,7 +53,6 @@ const Index = () => {
         "1 year"
     ];
 
-    const filterDays = () => {};
     if (oFetching || rFetching || pFetching || uFetching) {
         return <Loader text="please wait... initializing dashboard" />;
     }
@@ -123,7 +120,7 @@ const Index = () => {
                     text: "YES",
                     onPress: () => {
                         dispatch(setAdmin());
-                        router.replace("tab");
+                        // router.replace("tab")
                     }
                 }
             ]
@@ -143,7 +140,7 @@ const Index = () => {
                     </View>
                     <Ionicons onPress={logoutAdmin} name="power" size={24} />
                 </View>
-                <View className="px-2 py-2 bg-white shadow shadow-md shadow-black/40 rounded-sm my-2 mx-2 w-48 ">
+                <View className="px-2 py-2 bg-white shadow shadow-md shadow-black/40 rounded-sm my-2 mx-2 w-3/5">
                     <View>
                         <SelectDropdown
                             dropdownStyle={{
@@ -188,8 +185,6 @@ const Index = () => {
                             total={oTotal}
                             current={oCurr}
                             previous={oPrev}
-                            setSelected={setSelected}
-                            selected={selected}
                             setSelected={setSelected}
                             selected={selected}
                             name="order"

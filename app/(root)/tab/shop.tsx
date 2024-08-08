@@ -1,18 +1,18 @@
 import FilterModal from "@/components/FilterModal";
+import Loader from "@/components/Loader";
 import Filter from "@/components/Filter";
 import ProdCard from "@/components/ProdCard";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Search from "@/components/Search";
 import { useEffect, useState } from "react";
 
-import { getRating } from "@/lib/utils";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useGetProductsQuery } from "@/redux/product/productApiSlice";
 const Shop = () => {
     const [allProducts, setAllProducts] = useState([]);
-    const { data, isFetching, refetch, error, isError } = useGetProductsQuery();
+    const { data, isFetching, refetch } = useGetProductsQuery();
     const [filter, setFilter] = useState({ size: "", price: "", shipping: "" });
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState("");
@@ -38,7 +38,7 @@ const Shop = () => {
                     ].filter(Boolean).length;
 
                     // Return true if exactly two or more conditions are met
-                    return conditionsMet >= 1
+                    return conditionsMet >= 1;
                 });
 
             setAllProducts(res);

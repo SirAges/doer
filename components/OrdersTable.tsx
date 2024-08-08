@@ -5,7 +5,6 @@ import {
     Text,
     ScrollView,
     Modal,
-    Alert,
     TouchableWithoutFeedback
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -36,7 +35,7 @@ const OrdersTable = ({ days, data, isFetching, refetch }) => {
             setOrders(filtered);
         }
         return () => [];
-    }, [days]);
+    }, [days, data]);
     const update = async (field, value) => {
         console.log(field, value);
         const vals = {
@@ -45,20 +44,18 @@ const OrdersTable = ({ days, data, isFetching, refetch }) => {
                 data: { [field]: value }
             }
         };
-        const data = await updateOrder(vals);
+        await updateOrder(vals);
         setModal(false);
     };
     return (
         <View className="flex-1">
-            <Text
-                onPress={refetch}
-                className=" py-2 font-semibold capitalize "
-            >
+            <Text onPress={refetch} className=" py-2 font-semibold capitalize ">
                 {isFetching ? "fetching" : "reload table"}
             </Text>
             <ScrollView className="flex-1" horizontal>
                 <View className="space-y-2 bg-white ">
                     <View className="flex-row items-center px-2 space-x-2 border-b-2 border-dark-3 ">
+                        <Text className="w-7"></Text>
                         <Text className="w-24">order date</Text>
                         <Text className="w-44">order Id</Text>
                         <Text className="w-24">order total</Text>
@@ -103,7 +100,7 @@ const OrdersTable = ({ days, data, isFetching, refetch }) => {
                                                 const qty = arr[1];
                                                 const price = arr[2];
                                                 const title = arr[3];
-                                                const image = arr[4];
+                                                // const image = arr[4];
                                                 const size = arr[5];
                                                 const color = arr[6];
                                                 return (

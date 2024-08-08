@@ -1,66 +1,69 @@
 {
-    "cli": {
-        "version": ">= 7.6.2"
+  "cli": {
+    "version": ">= 7.6.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      }
     },
-    "build": {
-        "development": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "channel": "development",
-            "ios": {
-                "simulator": true
-            },
-            "android": { "buildType": "apk" }
-        },
-        "preview": {
-            "distribution": "internal",
-            "channel": "preview"
-        },
-        "test": {
-            "env": {
-  "EXPO_PUBLIC_CLOUDINARY_CLOUDENAME": "daxrp4nar",
-  "EXPO_PUBLIC_CLOUDINARY_SECRET": "tlccrm",
-  "EXPO_PUBLIC_CLOUDINARY_API_KEY": "868455186369275",
-  "EXPO_PUBLIC_ENDPOINT": "https://cloud.appwrite.io/v1",
-  "EXPO_PUBLIC_PROJECT_ID": "669be4c9000b8b0d7017",
-  "EXPO_PUBLIC_BUCKET_ID": "669c6294000adfc8cfeb",
-  "EXPO_PUBLIC_DATABASE_ID": "669be5f2002483438ebb",
-  "EXPO_PUBLIC_PRODUCT_COLLECTION_ID": "669be70a0000cb1642cc",
-  "EXPO_PUBLIC_ORDER_COLLECTION_ID": "669be722002110deaa26",
-  "EXPO_PUBLIC_REVIEW_COLLECTION_ID": "66aba3d600272f375427",
-  "EXPO_PUBLIC_USER_COLLECTION_ID": "669be7880032c4f9800a",
-  "EXPO_PUBLIC_HERO_COLLECTION_ID": "66acb521000aa64188ef",
-  "EXPO_PUBLIC_BRAND_COLLECTION_ID": "66acb68e002e0e3b4545",
-  "EXPO_PUBLIC_API_KEY": "1c2cc28632b926cd6dec823927e0ba9e7bfefc9d0dc10064c79f5a0338b4b371e1118acf4b719338895ec2d07cdedb5f8c6258fdcbdc1e29e9437b5184c5a64a9d8f60bfd9372f904bb14b5744c993da364ae7fa885a2f5eb12a0d94524cb588cd7c92cc2b0c696d8c94689252cf4b8dc14e71c5e201e05c2b140d72948c33db",
-  "EXPO_PUBLIC_STRIPE_KEY": "pk_test_51IaobzD3CbHrqpXSHtBGp9XdQrTIOKIoqMFOesxiTdIpa2yPC51PnAhCQTb7UloSgat6AbITijV1HhTyWqjgVUPo00UOm3bKQU",
-  "EXPO_PUBLIC_STRIPE_SECRET": "sk_test_51IaobzD3CbHrqpXSsC2iXWPD9eZPKksI5c7BOomqmBYQROKHa4xXrN3KFuSgLA0TjmztkdCrSqzanQ297zFrUm1j00Kn6hUo0H",
-  "EXPO_PUBLIC_STRIPE_API_URL": "https://stripe-u7eu.onrender.com"
-}
-        },
-        "production": {
-            "channel": "production",
-            "env": {
-  "EXPO_PUBLIC_CLOUDINARY_CLOUDENAME": "daxrp4nar",
-  "EXPO_PUBLIC_CLOUDINARY_SECRET": "tlccrm",
-  "EXPO_PUBLIC_CLOUDINARY_API_KEY": "868455186369275",
-  "EXPO_PUBLIC_ENDPOINT": "https://cloud.appwrite.io/v1",
-  "EXPO_PUBLIC_PROJECT_ID": "669be4c9000b8b0d7017",
-  "EXPO_PUBLIC_BUCKET_ID": "669c6294000adfc8cfeb",
-  "EXPO_PUBLIC_DATABASE_ID": "669be5f2002483438ebb",
-  "EXPO_PUBLIC_PRODUCT_COLLECTION_ID": "669be70a0000cb1642cc",
-  "EXPO_PUBLIC_ORDER_COLLECTION_ID": "669be722002110deaa26",
-  "EXPO_PUBLIC_REVIEW_COLLECTION_ID": "66aba3d600272f375427",
-  "EXPO_PUBLIC_USER_COLLECTION_ID": "669be7880032c4f9800a",
-  "EXPO_PUBLIC_HERO_COLLECTION_ID": "66acb521000aa64188ef",
-  "EXPO_PUBLIC_BRAND_COLLECTION_ID": "66acb68e002e0e3b4545",
-  "EXPO_PUBLIC_API_KEY": "1c2cc28632b926cd6dec823927e0ba9e7bfefc9d0dc10064c79f5a0338b4b371e1118acf4b719338895ec2d07cdedb5f8c6258fdcbdc1e29e9437b5184c5a64a9d8f60bfd9372f904bb14b5744c993da364ae7fa885a2f5eb12a0d94524cb588cd7c92cc2b0c696d8c94689252cf4b8dc14e71c5e201e05c2b140d72948c33db",
-  "EXPO_PUBLIC_STRIPE_KEY": "pk_test_51IaobzD3CbHrqpXSHtBGp9XdQrTIOKIoqMFOesxiTdIpa2yPC51PnAhCQTb7UloSgat6AbITijV1HhTyWqjgVUPo00UOm3bKQU",
-  "EXPO_PUBLIC_STRIPE_SECRET": "sk_test_51IaobzD3CbHrqpXSsC2iXWPD9eZPKksI5c7BOomqmBYQROKHa4xXrN3KFuSgLA0TjmztkdCrSqzanQ297zFrUm1j00Kn6hUo0H",
-  "EXPO_PUBLIC_STRIPE_API_URL": "https://stripe-u7eu.onrender.com"
-}
-        }
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview"
     },
-    "submit": {
-        "production": {}
+    "test": {
+      "env": {
+        "EXPO_PUBLIC_CLOUDINARY_CLOUDENAME": "daxrp4nar",
+        "EXPO_PUBLIC_CLOUDINARY_SECRET": "tlccrm",
+        "EXPO_PUBLIC_CLOUDINARY_API_KEY": "868455186369275",
+        "EXPO_PUBLIC_ENDPOINT": "https://cloud.appwrite.io/v1",
+        "EXPO_PUBLIC_PROJECT_ID": "669be4c9000b8b0d7017",
+        "EXPO_PUBLIC_BUCKET_ID": "669c6294000adfc8cfeb",
+        "EXPO_PUBLIC_DATABASE_ID": "669be5f2002483438ebb",
+        "EXPO_PUBLIC_PRODUCT_COLLECTION_ID": "669be70a0000cb1642cc",
+        "EXPO_PUBLIC_ORDER_COLLECTION_ID": "669be722002110deaa26",
+        "EXPO_PUBLIC_REVIEW_COLLECTION_ID": "66aba3d600272f375427",
+        "EXPO_PUBLIC_USER_COLLECTION_ID": "669be7880032c4f9800a",
+        "EXPO_PUBLIC_HERO_COLLECTION_ID": "66acb521000aa64188ef",
+        "EXPO_PUBLIC_BRAND_COLLECTION_ID": "66acb68e002e0e3b4545",
+        "EXPO_PUBLIC_API_KEY": "1c2cc28632b926cd6dec823927e0ba9e7bfefc9d0dc10064c79f5a0338b4b371e1118acf4b719338895ec2d07cdedb5f8c6258fdcbdc1e29e9437b5184c5a64a9d8f60bfd9372f904bb14b5744c993da364ae7fa885a2f5eb12a0d94524cb588cd7c92cc2b0c696d8c94689252cf4b8dc14e71c5e201e05c2b140d72948c33db",
+        "EXPO_PUBLIC_STRIPE_KEY": "pk_test_51IaobzD3CbHrqpXSHtBGp9XdQrTIOKIoqMFOesxiTdIpa2yPC51PnAhCQTb7UloSgat6AbITijV1HhTyWqjgVUPo00UOm3bKQU",
+        "EXPO_PUBLIC_STRIPE_SECRET": "sk_test_51IaobzD3CbHrqpXSsC2iXWPD9eZPKksI5c7BOomqmBYQROKHa4xXrN3KFuSgLA0TjmztkdCrSqzanQ297zFrUm1j00Kn6hUo0H",
+        "EXPO_PUBLIC_STRIPE_API_URL": "https://stripe-u7eu.onrender.com"
+      },
+      "channel": "test"
+    },
+    "production": {
+      "channel": "production",
+      "env": {
+        "EXPO_PUBLIC_CLOUDINARY_CLOUDENAME": "daxrp4nar",
+        "EXPO_PUBLIC_CLOUDINARY_SECRET": "tlccrm",
+        "EXPO_PUBLIC_CLOUDINARY_API_KEY": "868455186369275",
+        "EXPO_PUBLIC_ENDPOINT": "https://cloud.appwrite.io/v1",
+        "EXPO_PUBLIC_PROJECT_ID": "669be4c9000b8b0d7017",
+        "EXPO_PUBLIC_BUCKET_ID": "669c6294000adfc8cfeb",
+        "EXPO_PUBLIC_DATABASE_ID": "669be5f2002483438ebb",
+        "EXPO_PUBLIC_PRODUCT_COLLECTION_ID": "669be70a0000cb1642cc",
+        "EXPO_PUBLIC_ORDER_COLLECTION_ID": "669be722002110deaa26",
+        "EXPO_PUBLIC_REVIEW_COLLECTION_ID": "66aba3d600272f375427",
+        "EXPO_PUBLIC_USER_COLLECTION_ID": "669be7880032c4f9800a",
+        "EXPO_PUBLIC_HERO_COLLECTION_ID": "66acb521000aa64188ef",
+        "EXPO_PUBLIC_BRAND_COLLECTION_ID": "66acb68e002e0e3b4545",
+        "EXPO_PUBLIC_API_KEY": "1c2cc28632b926cd6dec823927e0ba9e7bfefc9d0dc10064c79f5a0338b4b371e1118acf4b719338895ec2d07cdedb5f8c6258fdcbdc1e29e9437b5184c5a64a9d8f60bfd9372f904bb14b5744c993da364ae7fa885a2f5eb12a0d94524cb588cd7c92cc2b0c696d8c94689252cf4b8dc14e71c5e201e05c2b140d72948c33db",
+        "EXPO_PUBLIC_STRIPE_KEY": "pk_test_51IaobzD3CbHrqpXSHtBGp9XdQrTIOKIoqMFOesxiTdIpa2yPC51PnAhCQTb7UloSgat6AbITijV1HhTyWqjgVUPo00UOm3bKQU",
+        "EXPO_PUBLIC_STRIPE_SECRET": "sk_test_51IaobzD3CbHrqpXSsC2iXWPD9eZPKksI5c7BOomqmBYQROKHa4xXrN3KFuSgLA0TjmztkdCrSqzanQ297zFrUm1j00Kn6hUo0H",
+        "EXPO_PUBLIC_STRIPE_API_URL": "https://stripe-u7eu.onrender.com"
+      }
     }
+  },
+  "submit": {
+    "production": {}
+  }
 }

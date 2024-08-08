@@ -1,7 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import storage from "redux-persist/lib/storage";
 import { apiSlice } from "./api/apiSlice";
 import {
     persistStore,

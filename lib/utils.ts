@@ -1,4 +1,4 @@
-import * as FileSystem from "expo-file-system";
+
 
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -142,9 +142,7 @@ export const resp = (
 
 export const uploadFile = async (uri, name) => {
     try {
-        const fileData = await FileSystem.readAsStringAsync(fileUri, {
-            encoding: FileSystem.EncodingType.Base64
-        });
+      
 
         const formData = new FormData();
         formData.append("file", {

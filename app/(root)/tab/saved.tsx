@@ -1,32 +1,19 @@
 import Checkout from "@/components/Checkout";
 import Loader from "@/components/Loader";
 import SavedCard from "@/components/SavedCard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Coupons from "@/components/Coupons";
 import { useSelector, useDispatch } from "react-redux";
-import {
-    selectCurrentWish,
-    addToWish,
-    removeFromWish
-} from "@/redux/wish/wishSlice";
+import { selectCurrentWish, removeFromWish } from "@/redux/wish/wishSlice";
 
-import {
-    selectCurrentCart,
-    addToCart,
-    removeFromCart
-} from "@/redux/cart/cartSlice";
-import { View, Text, FlatList, Image, ScrollView } from "react-native";
+import { selectCurrentCart, removeFromCart } from "@/redux/cart/cartSlice";
+import { View, Text, FlatList } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-    useLocalSearchParams,
-    useGlobalSearchParams,
-    Link,
-    router
-} from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { selectCurrentSession } from "@/redux/auth/authSlice";
 import { useGetCurrentQuery } from "@/redux/auth/authApiSlice";
-import { formatAmount, formatText } from "@/lib/utils";
+import { formatAmount } from "@/lib/utils";
 import { coupons } from "@/lib/data";
 const Saved = () => {
     const { saved } = useLocalSearchParams();
@@ -52,7 +39,6 @@ const Saved = () => {
 
     const couponPerc = couponAvailable?.coupon?.split("-")[1];
     const couponText = couponAvailable?.coupon?.split("-")[0];
-    console.log(couponText, couponPerc);
     if (!resolvedArray?.length) {
         return <Loader text={`Your ${saved} is empty`} />;
     }

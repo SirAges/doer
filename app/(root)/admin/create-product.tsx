@@ -1,7 +1,7 @@
 import FormInput from "@/components/FormInput";
-import * as FileSystem from "expo-file-system";
+
 import { useState } from "react";
-import { View, Text, TextInput, Image, Alert } from "react-native";
+import { View, Text, Image, } from "react-native";
 import { productInitial } from "@/lib/initial";
 import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { productForm } from "@/lib/form";
@@ -9,11 +9,11 @@ import { productSchema } from "@/lib/schema";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
     useAddNewProductMutation,
-    useCreateFileMutation
+
 } from "@/redux/product/productApiSlice";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Link, router } from "expo-router";
+
 import Toast from "react-native-simple-toast";
 import UUID from "react-native-uuid";
 const CreateProduct = () => {
@@ -21,18 +21,14 @@ const CreateProduct = () => {
     const loading = useSelector(selectCurrentLoading);
     const [files, setFiles] = useState([]);
     const [addNewProduct] = useAddNewProductMutation();
-    const [createFile] = useCreateFileMutation();
-    const {
-        EXPO_PUBLIC_CLOUDINARY_CLOUDENAME,
-
-        EXPO_PUBLIC_CLOUDINARY_API_KEY
-    } = process.env;
+  
+   
     const onSubmit = async value => {
         dispatch(setLoading());
 
         const uniqueID = UUID.v4();
-        const cloudName = EXPO_PUBLIC_CLOUDINARY_CLOUDENAME;
-        const apiKey = EXPO_PUBLIC_CLOUDINARY_API_KEY;
+        const cloudName = process.env.EXPO_PUBLIC_CLOUDINARY_CLOUDENAME;
+        const apiKey = process.env.EXPO_PUBLIC_CLOUDINARY_API_KEY;
         const uploadPreset = "tlccrm";
         const apiUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
 

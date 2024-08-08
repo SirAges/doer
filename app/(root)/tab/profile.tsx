@@ -2,30 +2,23 @@ import ProfileCard from "@/components/ProfileCard";
 import EditModal from "@/components/EditModal";
 
 import { useGetUserOrderQuery } from "@/redux/order/orderApiSlice";
-import { useGetUserQuery } from "@/redux/user/userApiSlice";
 import { selectCurrentWish, clearWish } from "@/redux/wish/wishSlice";
 import { selectCurrentCart, clearCart } from "@/redux/cart/cartSlice";
 import { clearRecent } from "@/redux/product/productSlice";
 import ProfileHero from "@/components/ProfileHero";
-import { useState, useEffect } from "react";
-import { View, Text, Image, BackHandler } from "react-native";
+import { useState } from "react";
+import { View, Text, Image } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentSession, setSession } from "@/redux/auth/authSlice";
+import { selectCurrentSession } from "@/redux/auth/authSlice";
 import { setLoading } from "@/redux/loading/loadingSlice";
 import Toast from "react-native-simple-toast";
 import {
     useSignOutMutation,
     useGetCurrentQuery,
-    useUpdateAccountMutation,
-    usePasswordRecoveryMutation
+    useUpdateAccountMutation
 } from "@/redux/auth/authApiSlice";
-import {
-    useLocalSearchParams,
-    useGlobalSearchParams,
-    Link,
-    router
-} from "expo-router";
+
 // tab from
 const Profile = () => {
     const dispatch = useDispatch();
@@ -51,7 +44,8 @@ const Profile = () => {
         dispatch(setLoading());
 
         try {
-            const data = await signOut(sessionId);
+           await signOut(sessionId);
+           
         } catch (error) {
             console.log("error", error);
         } finally {
@@ -62,7 +56,6 @@ const Profile = () => {
         dispatch(clearCart());
         dispatch(clearWish());
         dispatch(clearRecent());
-        dispatch(setSession(null));
     };
     const handleEdit = async (field, value, password) => {
         try {

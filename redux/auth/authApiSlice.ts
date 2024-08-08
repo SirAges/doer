@@ -1,5 +1,5 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
-import { setSession } from "@/redux/auth/authSlice";
+import { setSession, logOut } from "@/redux/auth/authSlice";
 import { apiSlice } from "@/app/api/apiSlice";
 const authAdapter = createEntityAdapter({
     sortComparer: (a, b) => b.$createdAt - a.$createdAt
@@ -36,10 +36,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
             ],
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
+                    
                     const { data } = await queryFulfilled;
-
                     if (!data) {
-                        dispatch(setSession(null));
+                        dispatch(logOut());
                     }
                 } catch (err) {
                     console.log(err);
@@ -59,13 +59,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log("dataquer", data);
+
                     if (data && data !== undefined) {
                         dispatch(setSession(data));
-                        console.log('dispatched');
                     }
                 } catch (err) {
-                    console.log("queryerr",err);
+                    console.log("queryerror", err);
                 }
             }
         }),
@@ -80,7 +79,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             ],
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
+                    await queryFulfilled;
                 } catch (err) {
                     console.log(err);
                 }
@@ -98,8 +97,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             ],
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled;
-                    console.log("builder", data);
+                    await queryFulfilled;
                 } catch (err) {
                     console.log(err);
                 }

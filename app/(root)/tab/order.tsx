@@ -1,35 +1,26 @@
-
 import Loader from "@/components/Loader";
-import SavedCard from "@/components/SavedCard";
 import { useState, useEffect } from "react";
 import {
     View,
     Text,
     FlatList,
-    Image,
     Alert,
     TouchableWithoutFeedback
 } from "react-native";
-import {
-    useLocalSearchParams,
-    useGlobalSearchParams,
-    Link,
-    router
-} from "expo-router";
+import { router } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { formatAmount, formatDateTime, formatText } from "@/lib/utils";
+import { formatAmount, formatDateTime } from "@/lib/utils";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentSession } from "@/redux/auth/authSlice";
-import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { useGetOrdersQuery } from "@/redux/order/orderApiSlice";
 const Order = () => {
     const session = useSelector(selectCurrentSession);
     const userId = session?.userId;
-    const date = new Date();
+
     const [openDate, setOpenDate] = useState(false);
-    const { data: orders,isFetching } = useGetOrdersQuery();
+    const { data: orders, isFetching } = useGetOrdersQuery();
 
     const [filter, setFilter] = useState(false);
     const [allOrders, setAllOrders] = useState([]);
@@ -78,7 +69,7 @@ const Order = () => {
         };
         setAllFilters();
         return () => false;
-    }, [status, value]);
+    }, [status, value,end,orders,start,userId]);
     useEffect(() => {
         const setAllFilters = () => {
             if (orders && orders !== undefined) {
@@ -90,7 +81,7 @@ const Order = () => {
         };
         setAllFilters();
         return () => false;
-    }, [orders]);
+    }, [orders,userId]);
 
     if (!allOrders?.length) {
         return <Loader text="your order is empty" />;

@@ -8,20 +8,12 @@ import {
     Image,
     ScrollView
 } from "react-native";
-import ColorPicker, {
-    Panel1,
-    Swatches,
-    Preview,
-    OpacitySlider,
-    HueSlider
-} from "reanimated-color-picker";
 
 import * as DocumentPicker from "expo-document-picker";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { useUpdateHeroMutation } from "@/redux/hero/heroApiSlice";
 import UUID from "react-native-uuid";
-import SelectDropdown from "react-native-select-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 
 const HeroModal = ({ modal, setModal, idx, item }) => {
@@ -36,7 +28,7 @@ const HeroModal = ({ modal, setModal, idx, item }) => {
                 { size: 1000000, type: "", uri: item?.images[imgIdx] }
             ]);
         }
-    }, [idx,imgIdx]);
+    }, [idx, imgIdx, item?.title, item?.images]);
     const [value, setValue] = useState({
         tag: "",
         discount: "",
@@ -115,10 +107,6 @@ const HeroModal = ({ modal, setModal, idx, item }) => {
             return;
         }
     };
-    const {
-        EXPO_PUBLIC_CLOUDINARY_CLOUDENAME,
-        EXPO_PUBLIC_CLOUDINARY_API_KEY
-    } = process.env;
 
     const pickDocument = async () => {
         try {
@@ -146,8 +134,8 @@ const HeroModal = ({ modal, setModal, idx, item }) => {
     const handleHeroUpdate = async () => {
         dispatch(setLoading());
         const uniqueID = UUID.v4();
-        const cloudName = EXPO_PUBLIC_CLOUDINARY_CLOUDENAME;
-        const apiKey = EXPO_PUBLIC_CLOUDINARY_API_KEY;
+        const cloudName = process.env.EXPO_PUBLIC_CLOUDINARY_CLOUDENAME;
+        const apiKey = process.env.EXPO_PUBLIC_CLOUDINARY_API_KEY;
         const uploadPreset = "tlccrm";
         const apiUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
         try {
@@ -206,7 +194,7 @@ const HeroModal = ({ modal, setModal, idx, item }) => {
             const newValue = {
                 data: value
             };
-            const res = await updateHero(newValue);
+           await updateHero(newValue);
         } catch (error) {
             console.log("error", error);
         } finally {
@@ -252,7 +240,7 @@ const HeroModal = ({ modal, setModal, idx, item }) => {
                                             }}
                                             className="rounded-full h-5 w-5 border-2 border-dark-3 text-xs"
                                         >
-                                            {c == value.frontColor &&
+                                            {c === value.frontColor &&
                                                 String.fromCharCode(
                                                     parseInt("2713", 16)
                                                 )}
@@ -277,7 +265,7 @@ const HeroModal = ({ modal, setModal, idx, item }) => {
                                             }}
                                             className="rounded-full h-5 w-5 border-2 border-dark-3 text-xs"
                                         >
-                                            {`${c}50` == value.backColor &&
+                                            {`${c}50` === value.backColor &&
                                                 String.fromCharCode(
                                                     parseInt("2713", 16)
                                                 )}

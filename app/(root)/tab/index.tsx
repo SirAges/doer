@@ -6,14 +6,14 @@ import BestSelling from "@/components/BestSelling";
 import Search from "@/components/Search";
 import Hero from "@/components/Hero";
 import { useState, useEffect } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useGetProductsQuery } from "@/redux/product/productApiSlice";
 import { useGetHerosQuery } from "@/redux/hero/heroApiSlice";
 const Index = () => {
     const [search, setSearch] = useState("");
-    const { data, isFetching, isError, refetch, error } = useGetProductsQuery();
+    const { data,  } = useGetProductsQuery();
 
-    const { data: hero, isFetching: fetching } = useGetHerosQuery();
+    const { data: hero } = useGetHerosQuery();
     const [products, setProducts] = useState([]);
     useEffect(() => {
         if (data && data.documents) {

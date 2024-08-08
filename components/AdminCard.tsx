@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { View, Text, TouchableWithoutFeedback } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";

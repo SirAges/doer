@@ -4,23 +4,17 @@ import Checkout from "@/components/Checkout";
 import ActionIcon from "@/components/ActionIcon";
 import { coupons } from "@/lib/data";
 import Coupons from "@/components/Coupons";
-import TopIcons from "@/components/TopIcons";
+
 import Toast from "react-native-simple-toast";
 import AboutItem from "@/components/AboutItem";
 import Reviews from "@/components/Reviews";
-import {
-    useLocalSearchParams,
-    useGlobalSearchParams,
-    Link,
-    router
-} from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import { useSelector, useDispatch } from "react-redux";
 import {
     selectCurrentWish,
     addToWish,
     removeFromWish
 } from "@/redux/wish/wishSlice";
-import { selectCurrentSession } from "@/redux/auth/authSlice";
 import { useGetCurrentQuery } from "@/redux/auth/authApiSlice";
 import { setLoading } from "@/redux/loading/loadingSlice";
 import { addToRecent } from "@/redux/product/productSlice";
@@ -35,25 +29,21 @@ import {
     Text,
     Image,
     TouchableWithoutFeedback,
-    TextInput,
     ScrollView
 } from "react-native";
 import { getRating, roundNum, formatAmount } from "@/lib/utils";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import UUID from "react-native-uuid";
 import {
     useAddNewReviewMutation,
     useGetProductReviewQuery
 } from "@/redux/review/reviewApiSlice";
 import { useGetProductQuery } from "@/redux/product/productApiSlice";
 const Product = () => {
-  const { productId } = useLocalSearchParams();
-  console.log('productId', productId);
-    const uniqueID = UUID.v4();
+    const { productId } = useLocalSearchParams();
+    console.log("productId", productId);
     const date = new Date();
-    const couponPerc = couponAvailable?.coupon?.split("-")[1];
-    const couponText = couponAvailable?.coupon?.split("-")[0];
+
     const [reviews, setReviews] = useState([]);
     const [variant, setVariant] = useState({ size: "", color: "" });
     const [coupon, setCoupon] = useState("");
@@ -65,7 +55,6 @@ const Product = () => {
         review: false
     });
 
-    
     const [addNewReview] = useAddNewReviewMutation();
     const { data, isFetching: fReview } = useGetProductReviewQuery(productId);
     const { data: product, isFetching } = useGetProductQuery(productId);
@@ -82,7 +71,8 @@ const Product = () => {
     const couponAvailable = coupons.find(
         f => f?.coupon?.toLowerCase().split("-")[0] === coupon.toLowerCase()
     );
-
+    const couponPerc = couponAvailable?.coupon?.split("-")[1];
+    const couponText = couponAvailable?.coupon?.split("-")[0];
     useEffect(() => {
         const getProduct = () => {
             if (product && product !== undefined) {
@@ -110,7 +100,7 @@ const Product = () => {
             setReviews(res);
         }
         return () => [];
-    }, [data, productId]);
+    }, [data, productId, dispatch]);
 
     const toggleWish = () => {
         if (wished) {
@@ -350,14 +340,39 @@ const Product = () => {
                         <Text className="text-xs capitalize text-dark-2">
                             Total price
                         </Text>
-                        <Text className="text-2xl font-semibold capitalize text-primary-2">
-                            {formatAmount(
-                                qty *
-                                    (couponAvailable
-                                        ? (product.price * couponPerc) / 100
-                                        : product.price)
-                            )}
-                        </Text>
+                        {!product?.discount ? (
+                            <Text className="text-2xl font-semibold capitalize text-primary-2">
+                                {formatAmount(
+                                    qty *
+                                        (couponAvailable
+                                            ? (product.price * couponPerc) / 100
+                                            : product.price)
+                                )}
+                            </Text>
+                        ) : (
+                            <View>
+                                <Text className="text-sm font-semibold capitalize text-dark-2 line-through">
+                                    {formatAmount(qty * product.price)}
+                                </Text>
+                                <Text className="text-xl font-semibold capitalize text-primary-2 ">
+                                    {formatAmount(
+                                        qty *
+                                            (couponAvailable
+                                                ? (product.price *
+                                                      (product.discount
+                                                          ? product.discount /
+                                                            100
+                                                          : 1) *
+                                                      couponPerc) /
+                                                  100
+                                                : product.price *
+                                                  (product?.discount
+                                                      ? product.discount / 100
+                                                      : 1))
+                                    )}
+                                </Text>
+                            </View>
+                        )}
                     </View>
                     <View className="flex-row items-center">
                         <Ionicons

@@ -14,7 +14,7 @@ import {
 import { useGetProductReviewQuery } from "@/redux/review/reviewApiSlice";
 const ProdCard = ({ item, width }) => {
     const { $id, title, desc, images, category, price, colors, sizes } = item;
-    const { data, isFetching } = useGetProductReviewQuery($id);
+    const { data } = useGetProductReviewQuery($id);
     const [reviews, setReviews] = useState([]);
     const totalReviews = reviews?.length || 0;
     const avgReview = getRating(reviews);
@@ -58,7 +58,7 @@ const ProdCard = ({ item, width }) => {
             setReviews(res);
         }
         return () => [];
-    }, [data]);
+    }, [data,$id]);
 
     return (item&&
         <TouchableWithoutFeedback

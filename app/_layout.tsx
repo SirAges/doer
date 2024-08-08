@@ -1,10 +1,6 @@
-import {
-    DarkTheme,
-    DefaultTheme,
-    ThemeProvider
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Slot, router } from "expo-router";
+import * as Updates from "expo-updates";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider } from "react-redux";
@@ -51,12 +47,26 @@ export default function RootLayout() {
 
         return () => backHandler.remove();
     }, []);
+    const onFetchUpdateAsync = async () => {
+        try {
+            const update = await Updates.checkForUpdateAsync();
 
+            if (update.isAvailable) {
+                await Updates.fetchUpdateAsync();
+                await Updates.reloadAsync();
+            }
+        } catch (error) {
+            alert(`Error fetching latest Expo update: ${error}`);
+        }
+    };
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync();
         }
     }, [loaded]);
+    useEffect(() => {
+        onFetchUpdateAsync();
+    }, []);
 
     if (!loaded) {
         return null;

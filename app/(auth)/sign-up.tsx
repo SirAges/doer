@@ -1,6 +1,5 @@
 import FormInput from "@/components/FormInput";
-import { useState } from "react";
-import { View, Text, TextInput, Image, Alert } from "react-native";
+import { View, Text, Image,  } from "react-native";
 import { authInitial } from "@/lib/initial";
 import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { signUpForm } from "@/lib/form";
@@ -12,14 +11,13 @@ import {
 } from "@/redux/auth/authApiSlice";
 import { useAddNewUserMutation } from "@/redux/user/userApiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentSession } from "@/redux/auth/authSlice";
-import { Link, router } from "expo-router";
+import {  router } from "expo-router";
 import Toast from "react-native-simple-toast";
 import UUID from "react-native-uuid";
 const SignUp = () => {
     const dispatch = useDispatch();
     const loading = useSelector(selectCurrentLoading);
-    const session = useSelector(selectCurrentSession);
+    
     const [signUp] = useSignUpMutation();
     const [signIn] = useSignInMutation();
     const [addNewUser] = useAddNewUserMutation();
@@ -56,7 +54,8 @@ const SignUp = () => {
             if (user.error) {
                 Toast.show("an error occured, check credentials");
                 router.push("sign-in");
-            }
+            }else{
+            router.replace("tab");}
         } catch (error) {
             console.log("error-signup", error);
         } finally {

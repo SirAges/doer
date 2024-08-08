@@ -1,23 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState,  } from "react";
 import {
     View,
     Text,
     Modal,
     TouchableWithoutFeedback,
     TextInput,
-    Image
+  
 } from "react-native";
-import * as DocumentPicker from "expo-document-picker";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
 
-import UUID from "react-native-uuid";
-import SelectDropdown from "react-native-select-dropdown";
-import { useDispatch, useSelector } from "react-redux";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import {  selectCurrentLoading } from "@/redux/loading/loadingSlice";
+
+import {  useSelector } from "react-redux";
 
 const ReviewModal = ({ modal, setModal, action, item }) => {
     const loading = useSelector(selectCurrentLoading);
-    const dispatch = useDispatch();
 
     const [value, setValue] = useState("");
     const [rate, setRate] = useState(null);

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -12,7 +12,7 @@ const authSlice = createSlice({
         },
 
         logOut: (state, action) => {
-            state.session = null;
+            state.session = false
         },
         setAdmin: (state, action) => {
             state.admin = !state.admin;

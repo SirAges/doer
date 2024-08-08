@@ -28,7 +28,7 @@ const userSlice = createSlice({
         },
 
         removeFromCart: (state, action) => {
-            const accessToken = action.payload;
+        
             const user = state.user;
             const filtered = user.filter(f => f.id !== action.payload);
             state.user = filtered;

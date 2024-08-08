@@ -8,15 +8,7 @@ import {
     useUpdateProductMutation,
     useDeleteProductMutation
 } from "@/redux/product/productApiSlice";
-import {
-    View,
-    Text,
-    ScrollView,
-    Modal,
-    TouchableWithoutFeedback,
-    Image,
-    Alert
-} from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { formatAmount, formatDateTime } from "@/lib/utils";
 import { router } from "expo-router";
@@ -42,7 +34,10 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                 const res =
                     trimDay[1] === "days"
                         ? diffMill / (1000 * 60 * 60 * 24) <= Number(trimDay[0])
-                        : diffMill / (1000 * 60 * 60 * 24 * 30) <=
+                        : trimDay[1].includes("month")
+                        ? diffMill / (1000 * 60 * 60 * 24 * 30) <=
+                          Number(trimDay[0])
+                        : diffMill / (1000 * 60 * 60 * 24 * 365) <=
                           Number(trimDay[0]);
                 return res;
             });
@@ -50,7 +45,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
             setProducts(filtered?.length ? filtered : []);
         }
         return () => [];
-    }, [days]);
+    }, [days, data]);
 
     const buttons = [
         {
@@ -77,8 +72,6 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
     ];
 
     const handleEdit = async (field, value) => {
-        dispatch(setLoading());
-        console.log(field, value);
         try {
             const vals = {
                 productId: idx,
@@ -86,14 +79,12 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                     data: { [field]: value }
                 }
             };
-            const data = await updateProduct(vals);
+            await updateProduct(vals);
 
             setEdit(false);
         } catch (error) {
             console.log("error", error);
         } finally {
-            refetch();
-            dispatch(setLoading());
         }
     };
 
@@ -130,6 +121,8 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
         "desc",
         "shortdesc",
         "price",
+        "discount",
+        "brand",
         "weight",
         "images",
         "category",
@@ -168,7 +161,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                 <ScrollView horizontal>
                     <View className="space-y-2 bg-white">
                         <View className="flex-row items-center px-2 space-x-2 bproduct-b-2 bproduct-dark-3 ">
-                            <Text className="w-7 capitalize font-semibold"></Text>
+                            <Text className="w-7 h-7 capitalize font-semibold"></Text>
                             <Text className="w-14 capitalize font-semibold"></Text>
                             <Text className="w-24 capitalize font-semibold">
                                 date
@@ -214,6 +207,8 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                                 $id,
                                 title,
                                 price,
+                                discount,
+                                brand,
                                 desc,
                                 images,
                                 category,
@@ -233,7 +228,7 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                                             style={{
                                                 backgroundColor: "#1eec2735"
                                             }}
-                                            className="px-2 py-2 items-center justify-center h-fit rounded-sm"
+                                            className="px-2 py-2 items-center justify-center h-fit"
                                         >
                                             <Ionicons
                                                 onPress={() => {
@@ -241,6 +236,8 @@ const ProductsTable = ({ days, isFetching, refetch, data }) => {
                                                     setItem({
                                                         title,
                                                         price,
+                                                        discount,
+                                                        brand,
                                                         desc,
                                                         images,
                                                         category,

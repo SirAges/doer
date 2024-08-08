@@ -3,8 +3,8 @@ import EditModal from "./EditModal";
 import BottomMenu from "./BottomMenu";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import { View, Text, ScrollView ,Alert} from "react-native";
-import { formatAmount, formatDateTime } from "@/lib/utils";
+import { View, Text, ScrollView, Alert } from "react-native";
+import { formatDateTime } from "@/lib/utils";
 import { useDispatch } from "react-redux";
 import { setLoading } from "@/redux/loading/loadingSlice";
 import {
@@ -18,7 +18,7 @@ const UsersTable = ({ days, refetch, isFetching, data }) => {
     const [edit, setEdit] = useState(false);
 
     const [item, setItem] = useState({});
-    const [opt, setOpt] = useState(false);
+
     const [idx, setIdx] = useState(null);
     const [updateUser] = useUpdateUserMutation();
     const [deleteUser] = useDeleteUserMutation();
@@ -49,7 +49,7 @@ const UsersTable = ({ days, refetch, isFetching, data }) => {
                 }
             };
 
-            const data = await updateUser(vals);
+         await updateUser(vals);
 
             setEdit(false);
         } catch (error) {
@@ -88,7 +88,7 @@ const UsersTable = ({ days, refetch, isFetching, data }) => {
             dispatch(setLoading());
         }
     };
-    const userOptions = [ "state", "address"];
+    const userOptions = ["state", "address"];
     useEffect(() => {
         if (data && data !== undefined) {
             const filtered = data.documents.filter(({ $createdAt }) => {
@@ -107,7 +107,7 @@ const UsersTable = ({ days, refetch, isFetching, data }) => {
             setUsers(filtered);
         }
         return () => [];
-    }, [days]);
+    }, [days, data]);
 
     return (
         <View className="flex-1">
@@ -143,8 +143,9 @@ const UsersTable = ({ days, refetch, isFetching, data }) => {
                                 country
                             }) => (
                                 <View
-                                key={$id}
-                                className="flex-row items-start py-2 px-2 space-x-2 buser-b buser-dark-3">
+                                    key={$id}
+                                    className="flex-row items-start py-2 px-2 space-x-2 buser-b buser-dark-3"
+                                >
                                     <View
                                         style={{ backgroundColor: "#1eec2735" }}
                                         className="px-2 py-2 items-center justify-center h-fit"

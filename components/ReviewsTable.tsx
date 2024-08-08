@@ -24,7 +24,7 @@ const ReviewsTable = ({ days, refetch, isFetching, data }) => {
             setReviews(filtered);
         }
         return () => [];
-    }, [days]);
+    }, [days,data]);
 
     return (
         <View>
@@ -43,7 +43,6 @@ const ReviewsTable = ({ days, refetch, isFetching, data }) => {
             </View>
             <View>
                 <Reviews reviews={reviews} />
-              
             </View>
         </View>
     );

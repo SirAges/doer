@@ -1,10 +1,8 @@
 import OTPInput from "./OTPInput";
 import {
-    KeyboardAvoidingView,
-    SafeAreaView,
+   
     Text,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
+   
     View,
     Modal
 } from "react-native";

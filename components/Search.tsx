@@ -1,7 +1,6 @@
-import TopIcons from "./TopIcons";
-import { useState } from "react";
-import { View, Text, Image, TextInput } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+
+import { View, TextInput } from "react-native";
+
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 const Search = ({ classes, search, setSearch, placeholder }) => {

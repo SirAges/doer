@@ -1,8 +1,9 @@
+// @ts-nocheck
 import { useStripe } from "@stripe/stripe-react-native";
 import React from "react";
 import { View, Text, Alert } from "react-native";
 import Toast from "react-native-simple-toast";
-import { createOrder } from "@/lib/actions/order.actions";
+
 import { useSelector, useDispatch } from "react-redux";
 import { setLoading, selectCurrentLoading } from "@/redux/loading/loadingSlice";
 import { selectCurrentSession } from "@/redux/auth/authSlice";
@@ -90,10 +91,10 @@ const Checkout = ({ amount, products, variant }) => {
     };
 
     return (
-        <View className="px-2 py-3 bg-primary-2 rounded-md items-center">
+        <View className="justify-center items-center">
             <Text
                 onPress={loading ? null : onCheckout}
-                className="text-white text-lg"
+                className="text-white text-lg  px-2 py-3 h-fit bg-primary-2 rounded-md items-center"
             >
                 Checkout
             </Text>

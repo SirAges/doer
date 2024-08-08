@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentSession } from "@/redux/auth/authSlice";
 import { persistor } from "./store";
 const Index = () => {
